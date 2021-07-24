@@ -1,0 +1,13 @@
+# Version of Docker Compose
+version: "3"
+
+services: 
+  app:
+    build:
+      context: .
+    ports: 
+      - "8000:8000" # Map from port 8000 on host to 8000 on image
+    volumes:          # Maps volume of local machine to Docker Container in real-time
+      - ./app:/app  # Maps the app directory in local machine to the app directory in docker container
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
