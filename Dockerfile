@@ -6,9 +6,12 @@ ENV PYTHONUNBUFFERED 1
 
 # Copy requirements.txt from host to image
 COPY ./requirements.txt /requirements.txt 
+RUN apk add --update --no-cache postgresql-client
+RUN apk add --update --no-cache --virtual .tmp-build-deps \
+      gcc libc-dev linux-headers postgresql-dev
 # Install dependencies via pip 
 RUN pip install -r /requirements.txt
-
+RUN apk del .tmp-build-deps
 # Run below command
 RUN mkdir /app
 # Set the default working directory to /app
